@@ -163,7 +163,7 @@ Fonts from Google Fonts
       this.stopSound("winSound");
       this.stopSound("loseSound");
       // This line will determine how many words will the user have to answer before finishing the quiz and sharing the score.
-      if("<%= @user.words_guessed.to_i %>" == 2) {
+      if("<%= @user.words_guessed.to_i %>" % 3 == 0) {
         this.winGame();
       } else {
         this.reset();
