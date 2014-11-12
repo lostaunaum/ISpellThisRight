@@ -163,9 +163,9 @@ Fonts from Google Fonts
       this.stopSound("winSound");
       this.stopSound("loseSound");
       // This line will determine how many words will the user have to answer before finishing the quiz and sharing the score.
-      if(<% @user.words_guessed %> == undefined) {
+      if(<%= @user.words_guessed %> == undefined) {
         this.reset();
-      } else if(<% @user.words_guessed %> % 3 == 0) {
+      } else if(<%= @user.words_guessed %> % 3 == 0) {
         this.winGame();
       } else {
         this.reset();
