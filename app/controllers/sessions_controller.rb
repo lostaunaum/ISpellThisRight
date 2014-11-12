@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       @authorization = Authorization.find_by(:token => auth_hash[:credentials][:token])
     end
     session[:user_id] = @user[:id]
-    @current_user = @user[:nickname];
+    @current_user = @user[:nickname]
     redirect_to "/user/#{@user.id}" 
   end
 

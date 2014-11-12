@@ -150,12 +150,12 @@ Fonts from Google Fonts
 
     theEndOfQuiz: function(e){
       e.preventDefault();
-      location.replace("http://protected-island-1345.herokuapp.com/user/<%= @user.id %>/score");
+      location.replace("/user/<%= @user.id %>/score");
     },
 
     theEndOfQuizNoShare: function(e){
       e.preventDefault();
-      location.replace("http://protected-island-1345.herokuapp.com/user/<%= @user.id %>/thanks");
+      location.replace("/<%= @user.id %>/thanks");
     },
 
     theRestart: function(e){
