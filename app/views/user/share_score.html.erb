@@ -9,7 +9,7 @@
 <% begin %>	
 <% @client.update("I scored #{@user.score}% on Marco's ISpellThisRight App!! Check how high you can score by taking the spelling challenge!! @lostaunaum") %>
 	<% rescue %>
-		<% @client.update = ActionView::Template::Error (Could not authenticate you): %>
+		<% @client.update = ActionView::Template::Error %>
 		<% sleep(1.0/24.0) #one 24th of a second %>
 		<% retry %>
 	<% else %>
