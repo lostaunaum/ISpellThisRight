@@ -153,12 +153,12 @@ Fonts from Google Fonts
 
     theEndOfQuiz: function(e){
       e.preventDefault();
-      location.replace("http://localhost:3000/user/<%= @user.id %>/score");
+      location.replace("http://protected-island-1345.herokuapp.com/user/<%= @user.id %>/score");
     },
 
     theEndOfQuizNoShare: function(e){
       e.preventDefault();
-      location.replace("http://localhost:3000/user/<%= @user.id %>/thanks");
+      location.replace("http://protected-island-1345.herokuapp.com/user/<%= @user.id %>/thanks");
     },
 
     theRestart: function(e){
