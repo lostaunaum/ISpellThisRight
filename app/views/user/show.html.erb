@@ -155,7 +155,7 @@ Fonts from Google Fonts
 
     theEndOfQuizNoShare: function(e){
       e.preventDefault();
-      location.replace("/<%= @user.id %>/thanks");
+      location.replace("/user/<%= @user.id %>/thanks");
     },
 
     theRestart: function(e){
@@ -163,7 +163,9 @@ Fonts from Google Fonts
       this.stopSound("winSound");
       this.stopSound("loseSound");
       // This line will determine how many words will the user have to answer before finishing the quiz and sharing the score.
-      if((<%= @user.words_guessed %> + 1) % 3 == 0) {
+      if(<% @user.words_guessed %> == undefined) {
+        this.reset();
+      } else if(<% @user.words_guessed %> % 3 == 0) {
         this.winGame();
       } else {
         this.reset();
