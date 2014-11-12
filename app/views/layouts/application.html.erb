@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ISpellThisRight</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="navBar">
+	<ul class="nav nav-pills">
+		<% if @current_user %>
+			<li><%= link_to 'Sign Out', signout_path, :method => :post %></li>
+			<li><%= link_to 'Home', root_path, :method => :get %></li>
+			<li><%= link_to 'Portafolio', "https://www.google.com", :method => :get %></li>
+			<li><%= link_to 'Linkedin', "https://www.linkedin.com/in/lostaunaum", :method => :get %></li>
+			<li><%= link_to 'GitHub', "https://github.com/lostaunaum", :method => :get %></li>
+		<% else %>
+			<li><%= link_to 'Home', root_path, :method => :get %></li>
+			<li><%= link_to 'Portafolio', "https://www.google.com", :method => :get %></li>
+			<li><%= link_to 'Linkedin', "https://www.linkedin.com/in/lostaunaum", :method => :get %></li>
+			<li><%= link_to 'GitHub', "https://github.com/lostaunaum", :method => :get %></li>
+			<% if flash[:message] %>
+				<div class="signOut"><%= flash[:message] %></div>
+			<% end %>
+		<% end %>
+	</ul>
+</div>
+
+	<%= yield %>
+
+</body>
+</html>

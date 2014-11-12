@@ -1,0 +1,27 @@
+<div class="frontPage">
+	<div class="text">ISpellThisRight!</div>
+	<div class="dropdown">
+		<select name="difficulty" class="form-control">
+			<option value="easy">I'm too young to die</option>
+			<option value="medium">Hey, not too rough</option>
+			<option value="hard">Hurt me plenty</option>
+		</select>
+		<button class="signIn">Sign in!</button>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$('.signIn').on('click', function() {
+		$.ajax({
+			type: 'PUT',
+			url: '/sessions/difficulty',
+			data: {
+				difficulty: $('select[name=difficulty]').val()
+			},
+			success: function() {
+		    	location.replace("http://localhost:3000/auth/twitter");
+			}
+		})
+  	});
+</script>

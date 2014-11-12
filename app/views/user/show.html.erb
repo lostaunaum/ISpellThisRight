@@ -1,0 +1,416 @@
+<div class="userInfo">
+  <h1>Hello! <%= @user.name %></h1>
+
+  <h2>Nickname: <%= @user.nickname %></h2>
+  <h2>Description: <%= @user.description %></h2>
+  <h2>Location: <%= @user.location %></h2>
+<% if @user.words_guessed.nil?  %>
+  <% @user.words_guessed = 0 %>
+  <% average_score = 0 %>
+<% elsif @user.words_guessed == 0 %>
+  <% average_score = 0 %>
+<% else %>
+  <% average_score = (@user.total_score/@user.words_guessed) %>
+<%end %>
+  <h3>Current Score: <%= average_score %></h3>
+  <h3>Word Count: <%= @user.words_guessed  %></h3>
+  <h3>Difficulty: <%= @word.difficulty  %></h3>
+
+
+  <h3><%= @word.word  %></h3>
+</div>
+
+<!-- Hangman Stuff down below!  -->
+
+<div class="hangman">
+  <div>
+  <button class="definition">Need the Definition? Click here!</button>
+  <br>
+    <span class="wordtextdef">
+      <% if @definition.class == Array%>
+          <% @definition.each do |defi| %>
+              <a class="description highlight"><%= defi.tr(":", "") %></a>
+          <%end%>
+      <%elsif !@definition.nil?%>
+          <a class="description">><%= @definition.tr(":", "") %></a>
+      <% else %>
+              <a class="description"><%= "No definition found!" %></a>
+      <%end%>
+    </span>
+  </div>
+  <br>
+  <div class="sound">
+    <audio src="<%= @word_audio_url %>" controls play>
+        <p>Your browser does not support the audio element.</p>
+    </audio>    
+  </div>
+  <div class="guess"></div>
+  <form class="guessForm">
+  <input type="text" class="guessLetter" maxlength="1"  placeholder="Enter a letter . . . &#x23ce;"/> <button type="submit" class="guessButton">Guess</button>
+  </form>  
+  <p>If you type in the wrong letter 5 times its Game Over!!. <br/>
+  Press the play button if you need to hear the word again!.<br/>
+  Original desing of word guess by Nate Wiley<br/><a href="http://codepen.io/natewiley">Follow Nate Wiley on Code Pen</a></p>
+  <div class="wrong">
+    <div class="wrongLetters"></div>
+  </div>
+  <div class="message">
+    <h1 class="title"></h1>
+    <p class="text"></p>
+    <button class="restart button">Next Word!</button>
+    <button class="endQuiz button">Share Score!!!</button>
+    <button class="endQuiz button noShare">Quit Game</button>
+    <button class="tryAgain button">Try Again!</button>
+    
+  </div>
+</div>
+
+<script type="text/javascript">
+/*
+* SPOILER ALERT! 
+* WORDS FOR THE GAME ARE IN THIS FILE ;)
+* ©2014 Nate Wiley -- MIT License
+Sounds from http://soundfxnow.com, and http://www.soundjay.com
+Fonts from Google Fonts
+*/
+
+(function($, window, undefined){
+
+  Hangman = {
+    init: function(words){
+      this.score = 0;
+      this.wordCount = 0;
+      this.descrip = $(".definition");
+      this.endQuiz = $(".endQuiz");
+      this.noShare = $(".noShare");
+      this.navBar = $(".navbar")
+      this.tryAgain = $(".tryAgain")
+
+      this.words = words;
+      this.hm = $(".hangman");
+      this.msg = $(".message");
+      this.msgTitle = $(".title");
+      this.msgText = $(".text");
+      this.restart = $(".restart");
+      this.wrd = this.randomWord();
+      this.correct = 0;
+      this.guess = $(".guess");
+      this.wrong = $(".wrong");
+      this.wrongGuesses = [];
+      this.rightGuesses = [];
+      this.guessForm = $(".guessForm");
+      this.guessLetterInput = $(".guessLetter");
+      this.goodSound = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/goodbell.mp3");
+      this.badSound = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/bad.mp3");
+      this.winSound = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/win.mp3");
+      this.loseSound = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/lose.mp3");
+      this.setup();
+    },
+
+
+    setup: function(){
+      this.binding();
+      this.sounds();
+      this.showGuess(this.wrongGuesses);
+      this.showWrong();
+
+    },
+
+    
+    sounds: function(){  
+      this.badSound.volume = .4;
+      this.goodSound.volume = .4;
+      this.winSound.volume = .8;
+      this.loseSound.volume = .4;
+      
+    },
+    
+    
+    binding: function(){
+      var me = this;
+      this.guessForm.on("submit", $.proxy(this.theGuess, this));
+      this.endQuiz.on("click", $.proxy(this.theEndOfQuiz, this));
+      this.noShare.on("click", $.proxy(this.theEndOfQuizNoShare, this));
+      this.tryAgain.on("click", $.proxy(this.theRestart, this));
+      this.restart.on("click", $.proxy(this.theRestart, this));
+      this.descrip.on('click', function (){
+        me.toggleDes();
+      });
+    },
+
+
+    playSound: function(sound){
+      this.stopSound(sound);
+      this[sound].play();
+    },
+
+
+    stopSound: function(sound){
+      this[sound].pause();
+      this[sound].currentTime = 0;
+
+    },
+
+    theEndOfQuiz: function(e){
+      e.preventDefault();
+      location.replace("http://localhost:3000/user/<%= @user.id %>/score");
+    },
+
+    theEndOfQuizNoShare: function(e){
+      e.preventDefault();
+      location.replace("http://localhost:3000/user/<%= @user.id %>/thanks");
+    },
+
+    theRestart: function(e){
+      e.preventDefault();
+      this.stopSound("winSound");
+      this.stopSound("loseSound");
+      // This line will determine how many words will the user have to answer before finishing the quiz and sharing the score.
+      if("<%= @user.words_guessed.to_i %>" == 2) {
+        this.winGame();
+      } else {
+        this.reset();
+      }
+    },
+
+
+    theGuess: function(e){
+      e.preventDefault();
+      var guess = this.guessLetterInput.val();
+      if(guess.match(/[a-zA-Z]/) && guess.length == 1){
+        if($.inArray(guess, this.wrongGuesses) > -1 || $.inArray(guess, this.rightGuesses) > -1){
+          this.playSound("badSound");
+          this.guessLetterInput.val("").focus();
+        }
+        else if(guess) {
+          var foundLetters = this.checkGuess(guess);
+          if(foundLetters.length > 0){
+            this.setLetters(foundLetters);
+            this.playSound("goodSound");
+            this.guessLetterInput.val("").focus();
+          } else {
+            this.wrongGuesses.push(guess);
+            if(this.wrongGuesses.length == 3){
+              this.lose();
+            } else {
+              this.showWrong(this.wrongGuesses);
+              this.playSound("badSound");
+            }
+            this.guessLetterInput.val("").focus();
+          }
+        }
+      } else {
+        this.guessLetterInput.val("").focus();
+      }
+    },
+
+    randomWord: function(){
+      return this._wordData(this.words[ Math.floor(Math.random() * this.words.length)] );
+    },
+
+
+    showGuess: function(){
+      var frag = "<ul class='word'>";
+      $.each(this.wrd.letters, function(key, val){
+        frag += "<li data-pos='" +  key  + "' class='letter'>*</li>";
+      });
+      frag += "</ul>";
+      this.guess.html(frag);
+    },
+
+
+    showWrong: function(wrongGuesses){
+      if(wrongGuesses){
+        var frag = "<ul class='wrongLetters'>";
+        frag += "<p>Wrong Letters: </p>";
+        $.each(wrongGuesses, function(key, val){
+          frag += "<li>" + val + "</li>";
+        });
+        frag += "</ul>";
+      }
+      else {
+        frag = "";
+      }
+
+      this.wrong.html(frag);
+    },
+
+
+    checkGuess: function(guessedLetter){
+      var _ = this;
+      var found = [];
+      $.each(this.wrd.letters, function(key, val){
+        if(guessedLetter == val.letter.toLowerCase()){
+          found.push(val);
+          _.rightGuesses.push(val.letter);
+        }
+      });
+      return found;
+
+    },
+
+
+    setLetters: function(letters){
+      var _ = this;
+      _.correct = _.correct += letters.length;
+      $.each(letters, function(key, val){
+        var letter = $("li[data-pos=" +val.pos+ "]");
+        letter.html(val.letter);
+        letter.addClass("correct");
+
+        if(_.correct  == _.wrd.letters.length){
+          _.win();
+        };
+
+      });
+    },
+
+
+    _wordData: function(word){
+
+      return {
+        letters: this._letters(word),
+        word: word.toLowerCase(),
+        totalLetters: word.length
+      };
+    },
+
+
+    hideMsg: function(){
+      this.msg.hide();
+      this.msgTitle.hide();
+      this.restart.hide();
+      this.msgText.hide();
+    },
+
+
+    showMsg: function(flag){
+      var _ = this;
+      _.msg.show("blind", function(){
+        _.msgTitle.show("bounce", "slow", function(){
+          _.msgText.show("slide", function(){
+            if(!flag){              
+              _.restart.show("fade");
+            }
+          });
+
+        });
+
+      });
+    },
+
+    toggleDes: function(){
+        $(".wordtextdef").toggle(15);
+    },
+
+    reset: function(){
+      this.hideMsg();
+      this.init(this.words);
+      this.hm.find(".guessLetter").focus();
+      location.reload();
+    },
+
+
+    _letters: function(word){
+      var letters = [];
+      for(var i=0; i<word.length; i++){
+        letters.push({
+          letter: word[i],
+          pos: i
+        });
+      }
+      return letters;
+    },
+
+
+    rating: function(){
+      var right = this.rightGuesses.length,
+          wrong = this.wrongGuesses.length || 0,
+          rating = {
+            rating: Math.floor(( right / ( wrong + right )) * 100),
+            guesses: (right + wrong)
+            
+          };
+      return rating;
+    },
+
+    win: function(){
+      var rating = this.rating();
+      this.msgTitle.html("Good Job!!");
+      // this is messy
+      this.msgText.html("You solved the word in <span class='highlight'>" + rating.guesses + "</span> Guesses!<br>Score: <span class='highlight'>" + rating.rating + "%</span>");
+      this.showMsg();
+      this.playSound("winSound");
+      this.score = this.score += rating.rating;
+      this.wordCount = this.wordCount += 1
+      $.ajax({
+        type: 'PUT',
+        url: "/user/<%= @user.id %>",
+        data: {
+          score: this.score,
+          wordCount: this.wordCount
+        },
+        success: function() {
+        }
+      })
+    },
+    winGame: function() {
+      this.msgTitle.html("You have completed the 3 word Challenge!!")
+      this.playSound("winSound");
+      var highestScore = "<%= @user.score %>";
+      var averageScore = "<%= average_score %>";
+
+      if(highestScore == "") {
+        highestScore = "No Score Recorded yet!"
+      };
+      this.msgText.html("Your highest score recorded<br>Score: <span class='highlight'>" + highestScore + "%<br></span> Your average score this game<br>Score: <span class='highlight'>" + averageScore + "%</span>");
+      this.showMsg();
+      this.playSound("winSound");
+      $(".restart").css("display", "none")
+      $(".navBar").css("display", "none")
+      $(".endQuiz").css("display", "inline-block")
+      $(".noShare").css("display", "inline-block")
+      $.ajax({
+        type: 'PUT',
+        url: "/user/<%= @user.id %>",
+        data: {
+          averageScore: "<%= average_score %>"
+        },
+        success: function() {
+        }
+      })
+    },
+
+    lose: function(){
+      this.msgTitle.html("You Lost.. The word was spelled <span class='highlight'>"+ this.wrd.word +"</span>");
+      this.msgText.html("Oh no! Dont worry you can try next time!");
+      this.showMsg(true);
+      this.playSound("loseSound");
+      $(".navBar").css("display", "none");
+      $(".restart").css("display", "none");
+      $(".tryAgain").css("display", "inline-block");
+      $(".noShare").css("display", "inline-block");
+    }
+  
+  };
+
+  var wordList = ["<%= @word.word %>"];
+
+
+  Hangman.init(wordList);
+  
+})(jQuery, window);
+
+
+
+  
+  
+
+
+</script>
+
+
+
+
+
+

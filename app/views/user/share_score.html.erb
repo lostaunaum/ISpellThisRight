@@ -1,0 +1,9 @@
+<h1>Score Shared!!</h1>
+
+<%= @user.name %>
+
+<% @user.total_score = 0 %>
+<% @user.words_guessed = 0 %>
+<% @user.save %>
+
+ @client.update("I scored #{@user.score}% on Marco's ISpellThisRight App!! Check how high you can score by taking the spelling challenge!! @lostaunaum") 
