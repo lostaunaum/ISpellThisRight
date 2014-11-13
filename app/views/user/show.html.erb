@@ -26,7 +26,7 @@
     <span class="wordtextdef">
       <% if @definition.class == Array%>
           <% @definition.each do |defi| %>
-              <a class="description highlight"><%= defi.tr(":", "") %></a>
+              <a class="description"><%= defi.tr(":", "") %></a>
           <%end%>
       <%elsif !@definition.nil?%>
           <a class="description">><%= @definition.tr(":", "") %></a>
@@ -47,7 +47,7 @@
   </form>  
   <p>If you type in the wrong letter 5 times its Game Over!!. <br/>
   Press the play button if you need to hear the word again!.<br/>
-  Original desing of word guess by Nate Wiley<br/><a href="http://codepen.io/natewiley">Follow Nate Wiley on Code Pen</a></p>
+  Original desing of word guess by Nate Wiley<br/><a class="description" href="http://codepen.io/natewiley">Follow Nate Wiley on Code Pen</a></p>
   <div class="wrong">
     <div class="wrongLetters"></div>
   </div>

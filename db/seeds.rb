@@ -45,7 +45,7 @@ mahal khan  ghoul muslin  camphor algorithm minaret
 tamarind  carafe  julep marzipan  nenuphar  alcazar tahini
 Qatari  alkali  serendipity nadir douane  fennec
 azimuth bezoar  halal alim  Swahili serdab  mihrab
-salaam  mukhtar khor  foggara coffle dugong guru  cushy seersucker  jungle  oolong
+salaam  mukhtar  foggara coffle dugong guru  cushy seersucker  jungle  oolong
 nirvana bangle  cummerbund  juggernaut  pangolin  mahatma
 rupee mongoose  shampoo typhoon bamboo  jackal
 dungaree  bungalow  gunnysack chutney karma jute
