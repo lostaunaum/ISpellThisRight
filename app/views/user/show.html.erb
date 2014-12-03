@@ -1,4 +1,16 @@
 <div class="userInfo">
+<!-- ################################## -->
+<!-- Reseting User Score down below!  -->
+<!-- ################################## -->
+
+<% @user.total_score = 0 %>
+<% @user.words_guessed = 0 %>
+<% @user.save %>
+
+<!-- ################################## -->
+<!-- User Interface Stuff down below!  -->
+<!-- ################################## -->
+
   <h1>Hello! <%= @user.name %></h1>
 
   <h2>Nickname: <%= @user.nickname %></h2>
@@ -11,7 +23,7 @@
   <% average_score = 0 %>
 <% else %>
   <% average_score = (@user.total_score/@user.words_guessed) %>
-<%end %>
+<% end %>
   <h3>Current Score: <%= average_score %></h3>
   <h3>Word Count: <%= @user.words_guessed  %></h3>
   <h3>Difficulty: <%= @word.difficulty  %></h3>
