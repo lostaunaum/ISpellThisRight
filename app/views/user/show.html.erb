@@ -1,13 +1,5 @@
 <div class="userInfo">
 <!-- ################################## -->
-<!-- Reseting User Score down below!  -->
-<!-- ################################## -->
-
-<% @user.total_score = 0 %>
-<% @user.words_guessed = 0 %>
-<% @user.save %>
-
-<!-- ################################## -->
 <!-- User Interface Stuff down below!  -->
 <!-- ################################## -->
 
@@ -16,17 +8,23 @@
   <h2>Nickname: <%= @user.nickname %></h2>
   <h2>Description: <%= @user.description %></h2>
   <h2>Location: <%= @user.location %></h2>
-<% if @user.words_guessed.nil?  %>
-  <% @user.words_guessed = 0 %>
-  <% average_score = 0 %>
-<% elsif @user.words_guessed == 0 %>
-  <% average_score = 0 %>
-<% else %>
-  <% average_score = (@user.total_score/@user.words_guessed) %>
-<% end %>
-  <h3>Current Score: <%= average_score %></h3>
-  <h3>Word Count: <%= @user.words_guessed  %></h3>
-  <h3>Difficulty: <%= @word.difficulty  %></h3>
+
+<!-- ################################## -->
+<!-- Reseting User Score down below!  -->
+<!-- ################################## -->
+
+  <% if @user.words_guessed.nil?  %>
+    <% @user.words_guessed = 0 %>
+    <% @user.save %>
+    <% average_score = 0 %>
+  <% elsif @user.words_guessed == 0 %>
+    <% average_score = 0 %>
+  <% else %>
+    <% average_score = (@user.total_score/@user.words_guessed) %>
+  <% end %>
+    <h3>Current Score: <%= average_score %></h3>
+    <h3>Word Count: <%= @user.words_guessed  %></h3>
+    <h3>Difficulty: <%= @word.difficulty  %></h3>
 </div>
 
 <!-- ################################## -->
