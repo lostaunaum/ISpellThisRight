@@ -40,7 +40,7 @@ hazard  apricot carmine monsoon average gazelle crimson
 orange  sequin  macrame algebra guitar  nabob giraffe
 mattress  elixir  saffron cotton  albatross zero  safari
 magazine  zenith  alfalfa imam  mosque  alcohol tariff
-lilac alcove  massage henna alchemy sugar taj
+lilac alcove  massage henna alchemy sugar
 mahal khan  ghoul muslin  camphor algorithm minaret
 tamarind  carafe  julep marzipan  nenuphar  alcazar tahini
 Qatari  alkali  serendipity nadir douane  fennec
