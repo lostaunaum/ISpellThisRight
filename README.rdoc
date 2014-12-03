@@ -1,28 +1,33 @@
-== README
+== ISpellThisRight Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application was designed to help the user improve his spelling abilities. As an English Major from Santa Clara University I understand the importance in having a good grasp of the English language. Because of this reason I decided to create an application that aids those who seek to improve their spelling abilities. 
 
-Things you may want to cover:
+== Instructions
 
-* Ruby version
+In order to access this application you will need an active twitter account. Once the application has been authorized by your account you will see the game interface.
 
-* System dependencies
+Before you click the sign in button you will need to chose a difficulty. Be aware that we have adopted the "DOOM" difficulty modes
 
-* Configuration
+I'm too young to die = Easy
+Hey not too rough = Medium
+Hurt me plenty = Hard
 
-* Database creation
+Within the game interface, you will need to input a letter at a time within the guessing box. The reason we decided to ask the user for one letter at a time is because it was the most efficient way of calculating you ability to spell that word correctly by counting the amount of letters you get wrong when spelling that particular word. 
 
-* Database initialization
+The application records your highest score, it keeps track of your current score and gives you the ability to share your score on twitter. As of now this is only a 3 word quiz.
 
-* How to run the test suite
+== Gems used
 
-* Services (job queues, cache servers, search engines, etc.)
+gem 'espeak-ruby'
+gem 'omniauth-twitter'
+gem 'http'
+gem 'jquery-ui-rails'
+gem 'twitter'
 
-* Deployment instructions
+== Comments, Questions or Bug Reports
 
-* ...
+Please email me at lostaunaum@gmail.com
 
+== Copyright 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Copyright (c) 2014 Marco Andre Lostaunau.
