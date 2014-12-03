@@ -71,6 +71,7 @@
 
   Hangman = {
     init: function(words){
+      // My added variables
       this.score = 0;
       this.wordCount = 0;
       this.descrip = $(".definition");
@@ -158,8 +159,8 @@
       e.preventDefault();
       this.stopSound("winSound");
       this.stopSound("loseSound");
-      // This line will determine how many words will the user have to answer before finishing the quiz and sharing the score.
-      if(<%= @user.words_guessed %> !== 0 && <%= @user.words_guessed %> % 3 == 0) {
+      // This line will determine how many words will the user have to answer before finishing the quiz and sharing the score. We make it bigger than or equal to two so it will break after guessing 3 words.
+      if(<%= @user.words_guessed %> >= 2) {
         this.winGame();
       } else {
         this.reset();
@@ -169,8 +170,9 @@
 // \w ==> undercase all regex figure it out
     theGuess: function(e){
       e.preventDefault();
-      var guess = this.guessLetterInput.val();
-      if(guess.match(/[a-zA-Z]/) && guess.length == 1){
+      // For some reason when user input had cap letters the program would record them as wrong guesses, this is interesting because in the if statement i ask the computer to check if its upper or lowe case letters .march(/[a-zA-Z]/). In order to avoid this problem I decided tolowercase all input by the user. 
+      var guess = this.guessLetterInput.val().toLowerCase();
+      if(guess.match(/[a-z]/) && guess.length == 1){
         if($.inArray(guess, this.wrongGuesses) > -1 || $.inArray(guess, this.rightGuesses) > -1){
           this.playSound("badSound");
           this.guessLetterInput.val("").focus();
