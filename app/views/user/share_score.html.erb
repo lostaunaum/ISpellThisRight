@@ -1,9 +1,17 @@
 <h1>Score Shared!!</h1>
 
-<%= @user.name %>
-
 <% @user.total_score = 0 %>
 <% @user.words_guessed = 0 %>
 <% @user.save %>
 
-<% @client.update("I scored #{@user.score}% on Marco's ISpellThisRight App!! Check how high you can score by taking the spelling challenge!! @lostaunaum") %>
+<% @client.update("I scored #{@user.score}% on Marco's ISpellThisRight App!! Take the spelling challenge!! @lostaunaum https://ispellthisright.herokuapp.com") %>
+
+<div class="shareScorePage">
+	<div class="shareScoreHeader">
+		<span class="shareScoreTitle">Score Shared!!</span></br>
+		<span class="shareScoreSignature">Thank you <% @user.name %> for your time!</span>
+	</div>
+	<div class="tweetblock">
+		<span class="tweetBlockSharescore"><blockquote class="twitter-tweet"><p>I am a <%= @user[:result] %> tweeter according to the iTweet-Sense app!! What about you? @lostaunaum http://radiant-river-9795.herokuapp.com</p><%= @user.name %> <a href="https://twitter.com/<%= @user.nickname %>">(@<%= @user.nickname %>)</a></blockquote></span>
+	</div>
+</div>

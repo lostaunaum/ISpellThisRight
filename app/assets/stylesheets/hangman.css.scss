@@ -23,6 +23,51 @@ a {
   }
 }
 
+/*##################################################
+Sharing Score Down Below
+##################################################*/
+
+.shareScorePage {
+  position: absolute;
+  font-family: "Londrina Solid", cursive;
+  width: 100%;
+}
+.shareScoreHeader {
+  background-color: #ff88cc;
+  width: 50%;
+  height: 129px;
+  border-radius: 20px;
+  margin-left: 26%;
+  padding: 15px;
+
+}
+
+.tweetBlockSharescore {
+  position: relative;
+  margin-left: 24%;
+}
+
+.shareScoreHeader .shareScoreTitle {
+  font-size: 35px; 
+  margin-left: 32%;
+  margin-bottom: 10px;
+  margin-top: 25px;
+}
+
+.shareScoreHeader .shareScoreSignature {
+  font-size: 25px; 
+  margin-left: 27%;
+  margin-bottom: 10px;
+}
+
+.tweetblock {
+  width: 100%;
+}
+
+/*##################################################
+Hangman Styles Down Below
+##################################################*/
+
 .hangman {
   float: right;
   width: 48%;

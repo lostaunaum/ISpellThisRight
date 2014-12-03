@@ -53,7 +53,7 @@ yamen raj pundit  loot  kavya
 pandit  chintz  patel gymkhana  basmati
 gingham mandir  bhalu gourami masala
 asana batik charpoy  mahout  prabhu
-Buddha  topeng  tanha lahar jnana Holi peloton barrage chagrin pacifism  manicure  altruism
+Buddha  topeng lahar jnana Holi peloton barrage chagrin pacifism  manicure  altruism
 bureaucracy mascot  parfait mystique  layette boutique
 dressage  croquet gorgeous  denture mirage  denim
 cachet  neologism beige diplomat  motif suave
@@ -132,8 +132,7 @@ karate  samurai teriyaki  sashimi tsunami
 haiku futon mikado  hibachi origami
 geisha  wasabi  ramen kudzu banzai
 tycoon  sumo  koan  satori  tatami
-kami  sukiyaki  kuruma  Meiji romaji
-odori miso  Kabuki  geta  sayonara
+kami  sukiyaki  kuruma  Meiji romaji miso  Kabuki  geta  sayonara
 karaoke nisei sansei  issei kibei lethargy  android chronic biopsy  irony
 automaton enthusiasm  synopsis  homogeneous odyssey
 megalopolis acme  synonym orthodox  aristocracy
