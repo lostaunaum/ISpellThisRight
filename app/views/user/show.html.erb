@@ -77,13 +77,14 @@
 
 <script type="text/javascript">
 
-
+//by making the window variable local Javascript can look it up at much faster speed.
+//undefined is just a regular variable that JQuery creates as a global variable that is has udefined as its value.  
 (function($, window, undefined){
 
   Hangman = {
     init: function(words){
       // My added variables
-      this.score = 0;
+      this.score = 0; 
       this.wordCount = 0;
       this.descrip = $(".definition");
       this.endQuiz = $(".endQuiz");
