@@ -1,4 +1,4 @@
-class Addingwordstable < ActiveRecord::Migration
+class Addingwordstable < ActiveRecord::Migration[5.1]
   def change
       create_table :words do |t|
       t.integer  :word

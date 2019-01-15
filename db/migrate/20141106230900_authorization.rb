@@ -1,4 +1,4 @@
-class Authorization < ActiveRecord::Migration
+class Authorization < ActiveRecord::Migration[5.1]
   def change
     create_table :authorizations do |t|
       t.string   :provider

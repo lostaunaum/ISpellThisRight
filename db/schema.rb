@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,43 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106230900) do
+ActiveRecord::Schema.define(version: 2014_11_06_230900) do
 
-  create_table "authorizations", force: true do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.integer  "user_id"
-    t.string   "token"
-    t.string   "secret"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "authorizations", force: :cascade do |t|
+    t.string "provider"
+    t.string "uid"
+    t.integer "user_id"
+    t.string "token"
+    t.string "secret"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "scores", force: true do |t|
-    t.integer  "high_score"
-    t.integer  "low_score"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "scores", force: :cascade do |t|
+    t.integer "high_score"
+    t.integer "low_score"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "location"
-    t.string   "nickname"
-    t.string   "score"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "total_score"
-    t.integer  "words_guessed"
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "location"
+    t.string "nickname"
+    t.string "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "total_score"
+    t.integer "words_guessed"
   end
 
-  create_table "words", force: true do |t|
-    t.string   "word"
-    t.string   "difficulty"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "words", force: :cascade do |t|
+    t.string "word"
+    t.string "difficulty"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
